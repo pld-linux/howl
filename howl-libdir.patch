@@ -1,0 +1,14 @@
+Index: Makefile.am
+===================================================================
+RCS file: /cvsroot/howl/howl/Makefile.am,v
+retrieving revision 1.6
+diff -u -p -r1.6 Makefile.am
+--- Makefile.am	24 Mar 2004 06:37:03 -0000	1.6
++++ Makefile.am	22 Jun 2004 14:36:54 -0000
+@@ -1,5 +1,5 @@
+ SUBDIRS = include src samples test docs etc project
+ 
+-pkgconfigdir = $(prefix)/lib/pkgconfig
++pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = howl.pc
+ 

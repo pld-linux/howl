@@ -1,0 +1,25 @@
+Index: howl.pc.in
+===================================================================
+RCS file: /cvsroot/howl/howl/howl.pc.in,v
+retrieving revision 1.1
+diff -u -p -r1.1 howl.pc.in
+--- howl.pc.in	13 Feb 2004 23:43:41 -0000	1.1
++++ howl.pc.in	23 Jun 2004 08:04:05 -0000
+@@ -3,10 +3,15 @@
+ # For more info, see <http://www.freedesktop.org/software/pkgconfig/>
+ #
+ 
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
++
+ Name: Howl
+ Description: Howl Rendezvous/mDNS-SD Library from Porchdog Software (http://www.porchdogsoft.com)
+ Version: @VERSION@
+ Requires:
+-Libs: -L@prefix@/lib -lhowl @PLATFORM_LIBS@
+-Cflags: -I@prefix@/include/howl-@VERSION@
++Libs: -L${libdir} -lhowl @PLATFORM_LIBS@
++Cflags: -I${includedir}/howl-@VERSION@
+ 
