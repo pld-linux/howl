@@ -1,0 +1,14 @@
+diff -urN aa/howl-0.9.6/src/autoipd/Makefile.am howl-0.9.6/src/autoipd/Makefile.am
+--- aa/howl-0.9.6/src/autoipd/Makefile.am	2004-03-24 08:08:48.000000000 +0100
++++ howl-0.9.6/src/autoipd/Makefile.am	2004-08-21 23:36:29.764505296 +0200
+@@ -1,8 +1,6 @@
+ SUBDIRS						=	Posix Linux
+ INCLUDES						=	-I$(top_srcdir)/include/
+-LDADD							=	$(AUTOIPD_EXTRA_OBJECTS) $(top_srcdir)/src/lib/howl/libhowl.la $(PLATFORM_LIBS)
++LDADD							=	$(top_srcdir)/src/lib/howl/libhowl.la $(PLATFORM_LIBS)
+ AM_LDFLAGS					=	-static
+ bin_PROGRAMS				=	autoipd
+-autoipd_SOURCES			=	autoip.c autoip.h
+-EXTRA_autoipd_SOURCES	=	Linux/linux_autoip.c Posix/posix_main.c
+-autoipd_DEPENDENCIES		=	$(AUTOIPD_EXTRA_OBJECTS)
++autoipd_SOURCES			=	autoip.c autoip.h Linux/linux_autoip.c Posix/posix_main.c
