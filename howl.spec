@@ -2,7 +2,7 @@ Summary:	Cross platform implementation of Zeroconf
 Summary(pl):	Miêdzyplatformowa implementacja Zeroconf
 Name:		howl
 Version:	0.9.6
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries
 Source0:	http://www.porchdogsoft.com/download/%{name}-%{version}.tar.gz
@@ -13,8 +13,9 @@ Source3:	mDNSResponder.conf
 Patch0:		%{name}-libdir.patch
 Patch1:		%{name}-pkgconfig.patch
 Patch2:		%{name}-am.patch
+Patch3:		%{name}-types.patch
 URL:		http://www.porchdogsoft.com/products/howl/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libtool
 Requires(post,preun):	/sbin/chkconfig
@@ -68,6 +69,7 @@ Statyczna biblioteka howl.
 %patch0 -p0
 %patch1 -p0
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -137,7 +139,7 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/*
 %dir %{_sysconfdir}/%{name}
-%config(noreplace) %{_sysconfdir}/%{name}/mDNSResponder.conf
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/%{name}/mDNSResponder.conf
 %{_datadir}/%{name}
 %{_mandir}/man8/*.8*
 
