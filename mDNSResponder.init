@@ -1,0 +1,98 @@
+#!/bin/sh
+#
+# mDNSResponder:	mDNS service responder daemon
+#
+# chkconfig:	345 34 66
+#
+# description:	This is a daemon which runs on Howl clients to perform \
+#               Zeroconf service discovery on a network.  mDNSResponder \
+#               must be running on systems that use Howl for service \
+#               discovery. mDNSResponder should not be running otherwise.
+#
+
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Check that networking is up.
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		# nls "ERROR: Networking is down. %s can't be run." mDNSResponder
+		msg_network_down mDNSResponder
+		exit 1
+	fi
+else
+	exit 0
+fi
+
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/mDNSResponder ]; then
+		# show "Starting %s service" mDNSResponder
+		msg_starting mDNSResponder
+		daemon --user nobody mDNSResponder
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/mDNSResponder
+	else
+		# show "%s service is already running." mDNSResponder
+		msg_already_running mDNSResponder
+	fi
+	;;
+  stop)
+	if [ -f /var/lock/subsys/mDNSResponder ]; then
+		# Stop daemons.
+		# show "Stopping %s service" mDNSResponder
+		msg_stopping mDNSResponder
+		killproc mDNSResponder
+		rm -f /var/lock/subsys/mDNSResponder
+	else
+		# show "%s service is not running." mDNSResponder
+		msg_not_running mDNSResponder
+	fi
+	;;
+  restart)
+	$0 stop
+	$0 start
+	exit $?
+	;;
+  reload)
+	if [ -f /var/lock/subsys/mDNSResponder ]; then
+		# show "Reload %s service" mDNSResponder
+		msg_reloading mDNSResponder
+		killproc mDNSResponder -HUP
+		RETVAL=$?
+	else
+		# show "%s service is not running." mDNSResponder
+		msg_not_running mDNSResponder >&2
+		RETVAL=7
+	fi
+	;;
+  force-reload)
+	# if program allows reloading without stopping
+	$0 reload
+
+	# or if it doesn't
+	$0 restart
+
+	exit $?
+	;;
+  status)
+	status mDNSResponder
+	RETVAL=$?
+	;;
+  *)
+	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
+
+# This must be last line !
+# vi:syntax=sh:tw=78:ts=8:sw=4

@@ -1,0 +1,99 @@
+#!/bin/sh
+#
+# nifd	Starts the nifd Daemon
+#
+# chkconfig:	345 33 67
+#
+# description:	This is a daemon which runs on Howl clients to monitor the \
+#               state of a network interface.  nifd must be running on \
+#               systems that use autoipd and mDNSResponder to automatically \
+#               obtain a Link-Local IPv4 address and do Zeroconf service \
+#               discovery. nifd should not be running otherwise.
+#
+
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Check that networking is up.
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		# nls "ERROR: Networking is down. %s can't be run." nifd
+		msg_network_down nifd
+		exit 1
+	fi
+else
+	exit 0
+fi
+
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/nifd ]; then
+		# show "Starting %s service" nifd
+		msg_starting nifd
+		daemon nifd
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/nifd
+	else
+		# show "%s service is already running." nifd
+		msg_already_running nifd
+	fi
+	;;
+  stop)
+	if [ -f /var/lock/subsys/nifd ]; then
+		# Stop daemons.
+		# show "Stopping %s service" nifd
+		msg_stopping nifd
+		killproc nifd
+		rm -f /var/lock/subsys/nifd
+	else
+		# show "%s service is not running." nifd
+		msg_not_running nifd
+	fi
+	;;
+  restart)
+	$0 stop
+	$0 start
+	exit $?
+	;;
+  reload)
+	if [ -f /var/lock/subsys/nifd ]; then
+		# show "Reload %s service" nifd
+		msg_reloading nifd
+		killproc nifd -HUP
+		RETVAL=$?
+	else
+		# show "%s service is not running." nifd
+		msg_not_running nifd >&2
+		RETVAL=7
+	fi
+	;;
+  force-reload)
+	# if program allows reloading without stopping
+	$0 reload
+
+	# or if it doesn't
+	$0 restart
+
+	exit $?
+	;;
+  status)
+	status nifd
+	RETVAL=$?
+	;;
+  *)
+	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
+
+# This must be last line !
+# vi:syntax=sh:tw=78:ts=8:sw=4
