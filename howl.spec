@@ -13,7 +13,6 @@ Source3:	mDNSResponder.conf
 Patch0:		%{name}-libdir.patch
 Patch1:		%{name}-pkgconfig.patch
 Patch2:		%{name}-am.patch
-#Patch3:		%{name}-types.patch - Obsoleted?
 URL:		http://www.porchdogsoft.com/products/howl/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -69,7 +68,6 @@ Statyczna biblioteka howl.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
-#%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -139,7 +137,7 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/*
 %dir %{_sysconfdir}/%{name}
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/%{name}/mDNSResponder.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/mDNSResponder.conf
 %{_datadir}/%{name}
 %{_mandir}/man8/*.8*
 
