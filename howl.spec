@@ -1,22 +1,18 @@
 Summary:	Cross platform implementation of Zeroconf
 Summary(pl):	Miêdzyplatformowa implementacja Zeroconf
 Name:		howl
-Version:	0.9.5
+Version:	0.9.6
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	http://www.porchdogsoft.com/download/%{name}-%{version}.tar.gz
-# Source0-md5:	28dc9e00de626ea14070bb42c6736ace
+# Source0-md5:	1a593f39928c0c4841939128b75e8279
 Source1:	mDNSResponder.init
 Source2:	nifd.init
-Patch0:		%{name}-endian.patch
-Patch1:		%{name}-fd_clr.patch
-Patch2:		%{name}-libdir.patch
-Patch3:		%{name}-pkgconfig.patch
-Patch4:		%{name}-salen.patch
-Patch5:		%{name}-sigpipe.patch
-Patch6:		%{name}-stdint.patch
-Patch7:		%{name}-sw_ulong.patch
+Source3:	mDNSResponder.conf
+Patch0:		%{name}-libdir.patch
+Patch1:		%{name}-pkgconfig.patch
+Patch2:		%{name}-am.patch
 URL:		http://www.porchdogsoft.com/products/howl/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -70,13 +66,8 @@ Statyczna biblioteka howl.
 %prep
 %setup -q
 %patch0 -p0
-%patch1 -p1
-%patch2 -p0
-%patch3 -p0
-%patch4 -p0
-%patch5 -p1
-%patch6 -p0
-%patch7 -p0
+%patch1 -p0
+%patch2 -p1
 
 %build
 %{__libtoolize}
@@ -95,6 +86,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},/etc/rc.d/init.d}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/mDNSResponder
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/nifd
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/mDNSResponder.conf
 
 # fix up header file directory naming bug
 mv $RPM_BUILD_ROOT%{_includedir}/%{name} $RPM_BUILD_ROOT%{_includedir}/%{name}-%{version}
@@ -102,6 +94,8 @@ mv $RPM_BUILD_ROOT%{_includedir}/%{name} $RPM_BUILD_ROOT%{_includedir}/%{name}-%
 # remove the samples
 rm -f $RPM_BUILD_ROOT%{_bindir}/mDNSBrowse
 rm -f $RPM_BUILD_ROOT%{_bindir}/mDNSPublish
+rm -f $RPM_BUILD_ROOT%{_bindir}/mDNSQuery
+rm -f $RPM_BUILD_ROOT%{_bindir}/mDNSResolve
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -139,10 +133,11 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README TODO etc/mDNSResponder.conf.sample
+%doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/*
 %dir %{_sysconfdir}/%{name}
+%config(noreplace) %{_sysconfdir}/%{name}/mDNSResponder.conf
 %{_datadir}/%{name}
 %{_mandir}/man8/*.8*
 
