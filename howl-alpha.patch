@@ -1,0 +1,12 @@
+diff -aurN howl-1.0.0.orig/include/salt/platform.h howl-1.0.0/include/salt/platform.h
+--- howl-1.0.0.orig/include/salt/platform.h	2005-05-19 08:12:32.000000000 +0200
++++ howl-1.0.0/include/salt/platform.h	2005-05-24 00:15:04.000000000 +0200
+@@ -56,7 +56,7 @@
+ typedef unsigned char			u_int8_t;
+ typedef signed short				int16_t;
+ typedef unsigned short			u_int16_t;
+-#if defined(_LP64) || defined (__LP64__)
++#if defined(__alpha__) || defined(_LP64) || defined (__LP64__)
+ typedef signed int				int32_t;
+ typedef unsigned int			u_int32_t;
+ #else
