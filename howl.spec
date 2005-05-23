@@ -2,7 +2,7 @@ Summary:	Cross platform implementation of Zeroconf
 Summary(pl):	Miêdzyplatformowa implementacja Zeroconf
 Name:		howl
 Version:	1.0.0
-Release:	1
+Release:	1.1
 License:	BSD
 Group:		Libraries
 Source0:	http://www.porchdogsoft.com/download/%{name}-%{version}.tar.gz
