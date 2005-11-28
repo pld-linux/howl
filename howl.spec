@@ -3,7 +3,7 @@ Summary(pl):	Miêdzyplatformowa implementacja Zeroconf
 Name:		howl
 Version:	1.0.0
 Release:	2
-License:	BSD
+License:	APSL / Other (see COPYING)
 Group:		Libraries
 Source0:	http://www.porchdogsoft.com/download/%{name}-%{version}.tar.gz
 # Source0-md5:	c389d3ffba0e69a179de2ec650f1fdcc
@@ -135,7 +135,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog COPYING NEWS README TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/*
 %dir %{_sysconfdir}/%{name}
