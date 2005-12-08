@@ -21,7 +21,6 @@
 # Check that networking is up.
 if is_yes "${NETWORKING}"; then
 	if [ ! -f /var/lock/subsys/network ]; then
-		# nls "ERROR: Networking is down. %s can't be run." nifd
 		msg_network_down nifd
 		exit 1
 	fi
@@ -35,25 +34,21 @@ case "$1" in
   start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/nifd ]; then
-		# show "Starting %s service" nifd
 		msg_starting nifd
 		daemon nifd
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/nifd
 	else
-		# show "%s service is already running." nifd
 		msg_already_running nifd
 	fi
 	;;
   stop)
 	if [ -f /var/lock/subsys/nifd ]; then
 		# Stop daemons.
-		# show "Stopping %s service" nifd
 		msg_stopping nifd
 		killproc nifd
 		rm -f /var/lock/subsys/nifd
 	else
-		# show "%s service is not running." nifd
 		msg_not_running nifd
 	fi
 	;;
@@ -64,12 +59,10 @@ case "$1" in
 	;;
   reload)
 	if [ -f /var/lock/subsys/nifd ]; then
-		# show "Reload %s service" nifd
 		msg_reloading nifd
 		killproc nifd -HUP
 		RETVAL=$?
 	else
-		# show "%s service is not running." nifd
 		msg_not_running nifd >&2
 		RETVAL=7
 	fi
@@ -88,7 +81,6 @@ case "$1" in
 	RETVAL=$?
 	;;
   *)
-	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
 	exit 3
 esac

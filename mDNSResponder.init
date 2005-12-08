@@ -20,7 +20,6 @@
 # Check that networking is up.
 if is_yes "${NETWORKING}"; then
 	if [ ! -f /var/lock/subsys/network ]; then
-		# nls "ERROR: Networking is down. %s can't be run." mDNSResponder
 		msg_network_down mDNSResponder
 		exit 1
 	fi
@@ -34,25 +33,21 @@ case "$1" in
   start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/mDNSResponder ]; then
-		# show "Starting %s service" mDNSResponder
 		msg_starting mDNSResponder
 		daemon --user nobody mDNSResponder
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/mDNSResponder
 	else
-		# show "%s service is already running." mDNSResponder
 		msg_already_running mDNSResponder
 	fi
 	;;
   stop)
 	if [ -f /var/lock/subsys/mDNSResponder ]; then
 		# Stop daemons.
-		# show "Stopping %s service" mDNSResponder
 		msg_stopping mDNSResponder
 		killproc mDNSResponder
 		rm -f /var/lock/subsys/mDNSResponder
 	else
-		# show "%s service is not running." mDNSResponder
 		msg_not_running mDNSResponder
 	fi
 	;;
@@ -63,12 +58,10 @@ case "$1" in
 	;;
   reload)
 	if [ -f /var/lock/subsys/mDNSResponder ]; then
-		# show "Reload %s service" mDNSResponder
 		msg_reloading mDNSResponder
 		killproc mDNSResponder -HUP
 		RETVAL=$?
 	else
-		# show "%s service is not running." mDNSResponder
 		msg_not_running mDNSResponder >&2
 		RETVAL=7
 	fi
@@ -87,7 +80,6 @@ case "$1" in
 	RETVAL=$?
 	;;
   *)
-	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
 	exit 3
 esac
