@@ -2,7 +2,7 @@ Summary:	Cross platform implementation of Zeroconf
 Summary(pl):	Miêdzyplatformowa implementacja Zeroconf
 Name:		howl
 Version:	1.0.0
-Release:	2
+Release:	3
 License:	APSL / Other (see COPYING)
 Group:		Libraries
 Source0:	http://www.porchdogsoft.com/download/%{name}-%{version}.tar.gz
@@ -33,6 +33,8 @@ now± ³atwo¶æ przy pracy w sieci IP.
 Summary:	Howl libraries
 Summary(pl):	Biblioteki howl
 Group:		Libraries
+Provides:	mdns-howl-libs
+Obsoletes:	avahi-compat-howl
 
 %description libs
 Howl libraries.
@@ -45,6 +47,8 @@ Summary:	Header files for howl library
 Summary(pl):	Pliki nag³ówkowe biblioteki howl
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
+Provides:	mdns-howl-devel
+Obsoletes:	avahi-compat-howl-devel
 
 %description devel
 Header files for howl library.
@@ -57,6 +61,8 @@ Summary:	Static howl library
 Summary(pl):	Statyczna biblioteka howl
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Provides:	mdns-howl-static
+Obsoletes:	avahi-compat-howl-static
 
 %description static
 Static howl library.
