@@ -1,0 +1,18 @@
+--- howl-1.0.0/src/lib/howl/Makefile.am.orig	2005-01-28 21:19:18.000000000 +0100
++++ howl-1.0.0/src/lib/howl/Makefile.am	2006-03-12 11:55:30.940416500 +0100
+@@ -7,5 +7,5 @@
+ libhowl_la_SOURCES			=	$(sources_h) $(sources_c)
+ libhowl_la_LDFLAGS			=	-version-info $(HOWL_LIBRARY_VERSION)
+ EXTRA_libhowl_la_SOURCES	=	MacOSX/macosx_salt.c MacOSX/macosx_socket.c MacOSX/macosx_time.c MacOSX/macosx_mdns_stub.c Posix/posix_salt.c Posix/posix_socket.c Posix/posix_time.c Posix/posix_signal.c Posix/posix_interface.c NotOSX/notosx_mdns_stub.c
+-libhowl_la_LIBADD				=	@HOWL_LIB_OBJECTS@
++libhowl_la_LIBADD				=	@HOWL_LIB_OBJECTS@ $(PLATFORM_LIBS)
+ libhowl_la_DEPENDENCIES		=	@HOWL_LIB_OBJECTS@
+--- howl-1.0.0/src/lib/mDNSResponder/Makefile.am.orig	2005-01-28 21:21:10.000000000 +0100
++++ howl-1.0.0/src/lib/mDNSResponder/Makefile.am	2006-03-12 11:56:43.092925750 +0100
+@@ -7,5 +7,5 @@
+ libmDNSResponder_la_SOURCES			=	$(sources_h) $(sources_c)
+ libmDNSResponder_la_LDFLAGS			=	-version-info $(MDNSRESPONDER_LIBRARY_VERSION)
+ EXTRA_libmDNSResponder_la_SOURCES	=	Posix/posix_mdns.c
+-libmDNSResponder_la_LIBADD				=	@MDNSRESPONDER_LIB_OBJECTS@
++libmDNSResponder_la_LIBADD				=	@MDNSRESPONDER_LIB_OBJECTS@ ../howl/libhowl.la
+ libmDNSResponder_la_DEPENDENCIES		=	@MDNSRESPONDER_LIB_OBJECTS@
