@@ -2,7 +2,7 @@ Summary:	Cross platform implementation of Zeroconf
 Summary(pl):	Miêdzyplatformowa implementacja Zeroconf
 Name:		howl
 Version:	1.0.0
-Release:	3
+Release:	4
 License:	APSL / Other (see COPYING)
 Group:		Libraries
 Source0:	http://www.porchdogsoft.com/download/%{name}-%{version}.tar.gz
@@ -14,11 +14,13 @@ Patch0:		%{name}-libdir.patch
 Patch1:		%{name}-pkgconfig.patch
 Patch2:		%{name}-am.patch
 Patch3:		%{name}-alpha.patch
+Patch4:		%{name}-link.patch
 URL:		http://www.porchdogsoft.com/products/howl/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libtool
 Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -76,11 +78,13 @@ Statyczna biblioteka howl.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
+%{__autoheader}
 %{__automake}
 %configure
 %{__make}
