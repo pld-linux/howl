@@ -20,7 +20,7 @@
 # Check that networking is up.
 if is_yes "${NETWORKING}"; then
 	if [ ! -f /var/lock/subsys/network ]; then
-		msg_network_down mDNSResponder
+		msg_network_down mdnsd
 		exit 1
 	fi
 else
@@ -32,21 +32,21 @@ fi
 case "$1" in
   start)
 	# Check if the service is already running?
-	if [ ! -f /var/lock/subsys/mDNSResponder ]; then
+	if [ ! -f /var/lock/subsys/mdnsd ]; then
 		msg_starting mDNSResponder
-		daemon --user nobody mDNSResponder
+		daemon --user nobody mdnsd
 		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/mDNSResponder
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/mdnsd
 	else
 		msg_already_running mDNSResponder
 	fi
 	;;
   stop)
-	if [ -f /var/lock/subsys/mDNSResponder ]; then
+	if [ -f /var/lock/subsys/mdnsd ]; then
 		# Stop daemons.
 		msg_stopping mDNSResponder
-		killproc mDNSResponder
-		rm -f /var/lock/subsys/mDNSResponder
+		killproc mdnsd
+		rm -f /var/lock/subsys/mdnsd
 	else
 		msg_not_running mDNSResponder
 	fi
@@ -57,9 +57,9 @@ case "$1" in
 	exit $?
 	;;
   reload)
-	if [ -f /var/lock/subsys/mDNSResponder ]; then
+	if [ -f /var/lock/subsys/mdnsd ]; then
 		msg_reloading mDNSResponder
-		killproc mDNSResponder -HUP
+		killproc mdnsd -HUP
 		RETVAL=$?
 	else
 		msg_not_running mDNSResponder >&2
@@ -76,7 +76,7 @@ case "$1" in
 	exit $?
 	;;
   status)
-	status mDNSResponder
+	status mdnsd
 	RETVAL=$?
 	;;
   *)
