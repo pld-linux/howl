@@ -62,7 +62,7 @@ case "$1" in
 		killproc mdnsd -HUP
 		RETVAL=$?
 	else
-		msg_not_running mDNSResponder >&2
+		msg_not_running mDNSResponder
 		RETVAL=7
 	fi
 	;;
