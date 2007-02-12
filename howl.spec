@@ -1,5 +1,5 @@
 Summary:	Cross platform implementation of Zeroconf
-Summary(pl):	Miêdzyplatformowa implementacja Zeroconf
+Summary(pl.UTF-8):   MiÄ™dzyplatformowa implementacja Zeroconf
 Name:		howl
 Version:	1.0.0
 Release:	5
@@ -27,13 +27,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Howl is a cross-platform implementation of Zeroconf networking.
 Zeroconf brings a new ease of use to IP networking.
 
-%description -l pl
-Howl jest miêdzyplatformow± implementacj± Zeroconf. Zeroconf przynosi
-now± ³atwo¶æ przy pracy w sieci IP.
+%description -l pl.UTF-8
+Howl jest miÄ™dzyplatformowÄ… implementacjÄ… Zeroconf. Zeroconf przynosi
+nowÄ… Å‚atwoÅ›Ä‡ przy pracy w sieci IP.
 
 %package libs
 Summary:	Howl libraries
-Summary(pl):	Biblioteki howl
+Summary(pl.UTF-8):   Biblioteki howl
 Group:		Libraries
 Provides:	mdns-howl-libs
 Obsoletes:	avahi-compat-howl
@@ -41,12 +41,12 @@ Obsoletes:	avahi-compat-howl
 %description libs
 Howl libraries.
 
-%description libs -l pl
+%description libs -l pl.UTF-8
 Biblioteki howl.
 
 %package devel
 Summary:	Header files for howl library
-Summary(pl):	Pliki nag³ówkowe biblioteki howl
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki howl
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Provides:	mdns-howl-devel
@@ -55,12 +55,12 @@ Obsoletes:	avahi-compat-howl-devel
 %description devel
 Header files for howl library.
 
-%description devel -l pl
-Pliki nag³ówkowe biblioteki howl.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki howl.
 
 %package static
 Summary:	Static howl library
-Summary(pl):	Statyczna biblioteka howl
+Summary(pl.UTF-8):   Statyczna biblioteka howl
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Provides:	mdns-howl-static
@@ -69,7 +69,7 @@ Obsoletes:	avahi-compat-howl-static
 %description static
 Static howl library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka howl.
 
 %prep
