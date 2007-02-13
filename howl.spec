@@ -1,5 +1,5 @@
 Summary:	Cross platform implementation of Zeroconf
-Summary(pl.UTF-8):   Międzyplatformowa implementacja Zeroconf
+Summary(pl.UTF-8):	Międzyplatformowa implementacja Zeroconf
 Name:		howl
 Version:	1.0.0
 Release:	5
@@ -33,7 +33,7 @@ nową łatwość przy pracy w sieci IP.
 
 %package libs
 Summary:	Howl libraries
-Summary(pl.UTF-8):   Biblioteki howl
+Summary(pl.UTF-8):	Biblioteki howl
 Group:		Libraries
 Provides:	mdns-howl-libs
 Obsoletes:	avahi-compat-howl
@@ -46,7 +46,7 @@ Biblioteki howl.
 
 %package devel
 Summary:	Header files for howl library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki howl
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki howl
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Provides:	mdns-howl-devel
@@ -60,7 +60,7 @@ Pliki nagłówkowe biblioteki howl.
 
 %package static
 Summary:	Static howl library
-Summary(pl.UTF-8):   Statyczna biblioteka howl
+Summary(pl.UTF-8):	Statyczna biblioteka howl
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Provides:	mdns-howl-static
