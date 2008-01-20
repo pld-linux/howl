@@ -28,10 +28,7 @@ else
 	exit 0
 fi
 
-
-# See how we were called.
-case "$1" in
-  start)
+start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/nifd ]; then
 		msg_starting nifd
@@ -41,23 +38,44 @@ case "$1" in
 	else
 		msg_already_running nifd
 	fi
-	;;
-  stop)
+}
+
+stop() {
 	if [ -f /var/lock/subsys/nifd ]; then
-		# Stop daemons.
 		msg_stopping nifd
 		killproc nifd
 		rm -f /var/lock/subsys/nifd
 	else
 		msg_not_running nifd
 	fi
+}
+
+condrestart() {
+	if [ -f /var/lock/subsys/nifd ]; then
+		stop
+		start
+	else
+		msg_not_running nifd
+		RETVAL=$1
+	fi
+}
+
+# See how we were called.
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
 	;;
   restart)
-	$0 stop
-	$0 start
-	exit $?
+	stop
+	start
 	;;
-  reload)
+  try-restart)
+	condrestart 0
+	;;
+  reload|force-reload)
 	if [ -f /var/lock/subsys/nifd ]; then
 		msg_reloading nifd
 		killproc nifd -HUP
@@ -67,21 +85,12 @@ case "$1" in
 		RETVAL=7
 	fi
 	;;
-  force-reload)
-	# if program allows reloading without stopping
-	$0 reload
-
-	# or if it doesn't
-	$0 restart
-
-	exit $?
-	;;
   status)
 	status nifd
 	RETVAL=$?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|try-restart|reload|force-reload|status}"
 	exit 3
 esac
 
