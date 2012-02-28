@@ -52,6 +52,17 @@ stop() {
 	rm -f /var/lock/subsys/mDNSResponder
 }
 
+condrestart() {
+	if [ ! -f /var/lock/subsys/mDNSResponder ]; then
+		msg_not_running "mDNSResponder"
+		RETVAL=$1
+		return
+	fi
+
+	stop
+	start
+}
+
 reload() {
 	if [ ! -f /var/lock/subsys/mDNSResponder ]; then
 		msg_not_running "mDNSResponder"
@@ -76,6 +87,9 @@ case "$1" in
 	stop
 	start
 	;;
+  try-restart)
+	condrestart 0
+	;;
   reload|force-reload)
 	reload
 	;;
@@ -84,7 +98,7 @@ case "$1" in
 	RETVAL=$?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|try-restart|reload|force-reload|status}"
 	exit 3
 esac
 
