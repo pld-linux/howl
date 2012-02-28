@@ -30,14 +30,15 @@ fi
 
 start() {
 	# Check if the service is already running?
-	if [ ! -f /var/lock/subsys/nifd ]; then
-		msg_starting "nifd"
-		daemon nifd
-		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/nifd
-	else
+	if [ -f /var/lock/subsys/nifd ]; then
 		msg_already_running "nifd"
+		return
 	fi
+
+	msg_starting "nifd"
+	daemon nifd
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/nifd
 }
 
 stop() {
